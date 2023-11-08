@@ -1,8 +1,7 @@
 import { getSession } from "next-auth/react"
 
 export async function GET(req: Request){
-    const url = new URL(req.url)
-    const {searchParams} = url
+    const {searchParams} = new URL(req.url)
 
     const requestForNextAuth = {
         headers: {
