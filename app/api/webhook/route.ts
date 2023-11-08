@@ -6,7 +6,7 @@ import Stripe from 'stripe'
 
 
 export async function POST(req: Request) {
-  const endpointKey = "whsec_a089ff2514b960c9c1779eea465997e4c149e963b5b8aca66cdbeb75648cfbab"
+  const endpointKey = process.env.WEBHOOK_KEY
   const stripeKey: string = process.env.STRIPE_SECRET_KEY!
   const stripe = new Stripe(stripeKey, {
     apiVersion: '2023-08-16',

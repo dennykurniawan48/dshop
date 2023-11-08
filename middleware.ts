@@ -28,7 +28,6 @@ async function middleware(req: NextRequest) {
             }
         }
     } else {
-        console.log("still")
         if (req.nextUrl.pathname.includes("/admin") && req.nextUrl.pathname !== "/admin/login") {
             return NextResponse.redirect(
                 new URL("/admin/login", req.url)
