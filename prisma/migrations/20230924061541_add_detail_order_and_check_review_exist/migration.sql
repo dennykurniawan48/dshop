@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "DetailOrder" ADD COLUMN     "addReview" BOOLEAN NOT NULL DEFAULT false;
+
+-- AlterTable
+ALTER TABLE "Order" ADD COLUMN     "address" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "fullName" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "total" DOUBLE PRECISION NOT NULL DEFAULT 0,
+ADD COLUMN     "zipCode" TEXT NOT NULL DEFAULT '';
