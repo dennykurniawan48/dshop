@@ -4,15 +4,15 @@ import { DataSession } from "./app/utils/type/session/DataSession";
 async function middleware(req: NextRequest) {
     const cookie = req.headers.get("cookie") ?? null
     let data: DataSession = { user: null }
-    // await fetch(`${process.env.NEXTAUTH_URL}/api/session?cookie=${cookie}`).then(res => {
-    //     if (res.ok) {
-    //         return res.json()
-    //     }
-    // }).then(res => {
-    //     data = res.data
-    // }).catch(err => {
-    //     console.log(err)
-    // })
+    await fetch(`${process.env.NEXTAUTH_URL}/api/session?cookie=${cookie}`).then(res => {
+        if (res.ok) {
+            return res.json()
+        }
+    }).then(res => {
+        data = res.data
+    }).catch(err => {
+        console.log(err)
+    })
 
     if (data.user) {
         if (req.nextUrl.pathname.includes("/admin") && req.nextUrl.pathname !== "/admin/login"
