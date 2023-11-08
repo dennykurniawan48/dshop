@@ -13,7 +13,11 @@ interface CartState {
     items: CartItem[]
 }
 
-const initialState: CartState = { items: JSON.parse(localStorage.getItem("cart") || "[]") };
+let initialState: CartState = { items: [] };
+
+if (typeof window !== 'undefined') {
+    initialState = {items: JSON.parse(localStorage.getItem("playlist") || "[]")}
+}
 
 const store = configureStore({
     preloadedState: {
