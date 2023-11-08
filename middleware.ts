@@ -1,38 +1,49 @@
-import { NextRequestWithAuth, withAuth } from "next-auth/middleware"
-import { getSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server"
+import { DataSession } from "./app/utils/type/session/DataSession";
 
-// export default withAuth(
-// `withAuth` augments your `Request` with the user's token.
-async function middleware(request: NextRequest) {
-    const requestForNextAuth = {
-        headers: {
-            cookie: request.headers.get("cookie"),
-        },
-    };
+async function middleware(req: NextRequest) {
+    const cookie = req.headers.get("cookie") ?? null
+    let data: DataSession = { user: null }
+    await fetch(`${process.env.NEXTAUTH_URL}/api/session?cookie=${cookie}`).then(res => {
+        if (res.ok) {
+            return res.json()
+        }
+    }).then(res => {
+        data = res.data
+    }).catch(err => {
+        console.log(err)
+    })
 
-    const session = await getSession({ req: requestForNextAuth });
-
-    //         console.log(request.nextUrl.pathname)
-    //         console.log(request.nextauth.token)
-
-    if (request.nextUrl.pathname.includes("/admin") && request.nextUrl.pathname !== "/admin/login"
-        && (!session && session?.is_admin !== true)) {
-        return NextResponse.redirect(
-            new URL("/admin/login", request.url)
-        )
-    }
-
-    if ((request.nextUrl.pathname.startsWith("/order") || request.nextUrl.pathname.startsWith("/cart") || request.nextUrl.pathname.startsWith("/favorite")) && (!session && session?.is_admin !== false)) {
-        return NextResponse.redirect(
-            new URL("/", request.url)
-        )
+    if (data.user) {
+        if (req.nextUrl.pathname.includes("/admin") && req.nextUrl.pathname !== "/admin/login"
+            && data.user.is_admin !== true) {
+            return NextResponse.redirect(
+                new URL("/admin/login", req.url)
+            )
+        } else {
+            if ((req.nextUrl.pathname.startsWith("/order") || req.nextUrl.pathname.startsWith("/cart") || req.nextUrl.pathname.startsWith("/favorite")) && data.user.is_admin !== false) {
+                return NextResponse.redirect(
+                    new URL("/", req.url)
+                )
+            }
+        }
+    } else {
+        console.log("still")
+        if (req.nextUrl.pathname.includes("/admin") && req.nextUrl.pathname !== "/admin/login") {
+            return NextResponse.redirect(
+                new URL("/admin/login", req.url)
+            )
+        } else if(req.nextUrl.pathname !== "/admin/login") {
+            return NextResponse.redirect(
+                new URL("/", req.url)
+            )
+        }
     }
 }
 
 export default middleware
-// Applies next-auth only to matching routes - can be regex
-// Ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
+// // Applies next-auth only to matching routes - can be regex
+// // Ref: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-    matcher: ["/order/:path", "/cart", "/favorite", '/admin/:path*']
+    matcher: ["/order/:path", "/cart", "/favorite", '/admin/:path*'],
 }

@@ -101,6 +101,7 @@ export const authOptions = {
           const decoded = jwt.verify(params.token, params.secret);
           resolve(decoded);
         } catch (err) {
+          console.log(err)
           resolve(null);
         }
       });

@@ -13,13 +13,13 @@ async function Page() {
    const [topProduct, setTopProduct] = useState<Top[]>([])
    const [topUser, setTopUser] = useState<Top[]>([])
    const { data: session, status } = useSession();
-   useEffect(() => {
-      if(status === 'unauthenticated'){
-        router.replace("/admin/login")
-      }else if(status === "authenticated" && !session?.user.is_admin){
-        router.replace("/admin/login")
-      }
-   }, [session, status])
+  //  useEffect(() => {
+  //     if(status === 'unauthenticated'){
+  //       router.replace("/admin/login")
+  //     }else if(status === "authenticated" && !session?.user.is_admin){
+  //       router.replace("/admin/login")
+  //     }
+  //  }, [session, status])
 
    useEffect(() => {
       fetch('/api/top').then(res => {

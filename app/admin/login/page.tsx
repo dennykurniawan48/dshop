@@ -42,7 +42,7 @@ function Page() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      if (session.user.is_admin) {
+      if (session?.user?.is_admin) {
         router.replace("/admin");
       } else {
         router.replace("/");
