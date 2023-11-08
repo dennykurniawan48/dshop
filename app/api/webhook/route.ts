@@ -67,9 +67,3 @@ export async function POST(req: Request) {
 async function sendPaymentReceivedNotification(orderId: string) {
   await fetch(`${process.env.NEXTAUTH_URL}/api/notification?orderId=${orderId}`).then(res => { if (res.ok) { res.json() } }).catch(err => console.log(err))
 }
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
