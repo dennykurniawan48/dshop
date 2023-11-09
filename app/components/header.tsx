@@ -196,7 +196,7 @@ function Header() {
                     >
                       <img
                         className="h-6 w-6"
-                        src="https://lh3.googleusercontent.com/a/ACg8ocJFG-atBFgJQ_DkXBFXEFqmJL36jagS53b47fhZkiZRSQ=s96-c"
+                        src="/avatar.svg"
                       />
                       <span>{session.user?.name?.split(" ")[0]}</span>
                     </button>
