@@ -129,7 +129,7 @@ function DetailReview(props: {
               {Math.round((props.data?.averageRating ?? 0) * 10) / 10}
             </div>
           </div>
-          {ratings((item, index) => {
+          {ratings.map((item, index) => {
             return (
               <div
                 key={index}
