@@ -4,7 +4,7 @@ import { DataSession } from "./app/utils/type/session/DataSession";
 async function middleware(req: NextRequest) {
     const cookie = req.headers.get("cookie") ?? null
     let data: DataSession = { user: null }
-    await fetch(`${process.env.NEXTAUTH_URL}/api/session?cookie=${cookie}`).then(res => {
+    await fetch(`https://dshop-alpha.vercel.app/api/session?cookie=${cookie}`).then(res => {
         if (res.ok) {
             return res.json()
         }
