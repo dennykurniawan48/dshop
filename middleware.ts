@@ -14,7 +14,7 @@ async function middleware(req: NextRequest) {
         console.log(err)
     })
 
-    if (data.user) {
+    if (data && data.user) {
         if (req.nextUrl.pathname.includes("/admin") && req.nextUrl.pathname !== "/admin/login"
             && data.user.is_admin !== true) {
             return NextResponse.redirect(
