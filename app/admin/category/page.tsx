@@ -51,7 +51,7 @@ async function Page() {
   const columns: TableColumn<DataRow>[] = [
     {
       name: "Image",
-      cell: (row) => <img src={row.thumbnail} className="w-16 h-16" />,
+      cell: (row) => <img src={row.thumbnail} className="w-16 h-16 p-2" />,
     },
     {
       name: "Name",
