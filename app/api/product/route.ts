@@ -13,14 +13,14 @@ export async function GET(req: Request) {
     if (query.length > 0) {
         const data = await prisma.$transaction([
             prisma.product.count({ where: onlyActive ? { isActive: true, name: { search: query }} : { name: { search: query } } }),
-            prisma.product.findMany({ where:  onlyActive ? { isActive: true, name: { search: query }} : { name: { search: query } }, skip: (page - 1) * limit })
+            prisma.product.findMany({ where:  onlyActive ? { isActive: true, name: { search: query }} : { name: { search: query } }, skip: (page - 1) * limit, take: limit })
         ])
         const response = { total: data[0], products: data[1], currentPage: page, totalPage: Math.ceil(data[0] / limit) }
         return Response.json({ "data": response })
     } else {
         const data = await prisma.$transaction([
             prisma.product.count({ where: { isActive: true } }),
-            prisma.product.findMany({ where: { isActive: true }, skip: (page - 1) * limit })
+            prisma.product.findMany({ where: { isActive: true }, skip: (page - 1) * limit, take: limit })
         ])
         const response = { total: data[0], products: data[1], currentPage: page, totalPage: Math.ceil(data[0] / limit) }
         return Response.json({ "data": response })
