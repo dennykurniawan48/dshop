@@ -66,7 +66,5 @@ export async function GET(req: Request) {
         return { name: item.name, qty: qty?._count.id ?? 0 }
     })
 
-
-
     return Response.json({ data: { product: topProduct, user: topUser } })
 }
